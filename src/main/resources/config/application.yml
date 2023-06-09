@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: MyApplication
+  profiles:
+    active:
+      -dev
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    database: POSTGRESQL
+    open-in-view: false
+    properties:
+      hibernate:
+        cache:
+        #          use_second_level_cache: true
+        #          use_query_cache: false
+        #          provider_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+        hbm2ddl:
+          auto: update
+        jdbc:
+          batch_size: 20
+          fetch_size: 20
+        order_updates: true
+  messages:
+    basename: i18n/messages
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
