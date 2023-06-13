@@ -22,10 +22,10 @@ public abstract class BaseEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    Long id;
+    protected Long id;
 
     @Column(columnDefinition = "boolean default false")
-    boolean deleted;
+    protected boolean deleted;
 
     public String getName() {
         return null;

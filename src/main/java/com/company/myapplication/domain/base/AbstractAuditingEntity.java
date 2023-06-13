@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,15 +20,22 @@ public abstract class AbstractAuditingEntity extends BaseEntity implements Seria
 
     static final Long serialVersionUID = 2L;
 
+    @Id
+    @Column(name = "id")
+    protected Long id;
+
+    @Column(columnDefinition = "boolean default false")
+    protected boolean deleted;
+
     @Column(name = "creator_id")
-    Long creatorId;
+    protected Long creatorId;
 
     @Column(name = "created_date")
-    LocalDateTime createdDate;
+    protected LocalDateTime createdDate;
 
     @Column(name = "updater_id")
-    Long updaterId;
+    protected Long updaterId;
 
     @Column(name = "updated_date")
-    LocalDateTime updatedDate;
+    protected LocalDateTime updatedDate;
 }

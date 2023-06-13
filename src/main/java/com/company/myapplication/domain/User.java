@@ -1,15 +1,18 @@
 package com.company.myapplication.domain;
 
 import com.company.myapplication.domain.base.AbstractAuditingEntity;
+import com.company.myapplication.enums.Language;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Powered by: Shuxratjon Rayimjonov
@@ -39,4 +42,44 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "password")
     String password;
+
+    @Column(name = "tin")
+    String tin;
+
+    @Column(name = "pinfl")
+    String pinfl;
+
+    @Column(name = "phone")
+    String phone;
+
+    @Column(name = "secret_key")
+    String secretKey;
+
+    @Column(name = "language")
+    Language language = Language.UZ;
+
+    @ManyToMany
+    @JoinTable(name = "user_athority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")}
+    )
+    @BatchSize(size = 10)
+    Set<Authority> authorities = new HashSet<>();
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        return id != null && id.equals(((User) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
